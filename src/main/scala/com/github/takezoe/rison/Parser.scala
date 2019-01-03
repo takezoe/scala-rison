@@ -26,9 +26,18 @@ class Parser extends RegexParsers {
       case '!'  if escaping == false => escaping = true
       case '!'  if escaping == true  => sb.append('!'); escaping = false
       case '\'' if escaping == true  => sb.append('\''); escaping = false
-      case c    if escaping == true  => throw new RuntimeException(s"Invalid Escape: !${c}")
+      case c    if escaping == true  => err(s"Invalid Escape: !${c}")
       case c                         => sb.append(c)
     }
     sb.toString
   }
+
+  def parse(str: String): Either[String, ValueNode] = {
+    parse(rison, str) match {
+      case Success(matched, _) => Right(matched)
+      case Failure(msg    , _) => Left(msg)
+      case Error  (msg    , _) => Left(msg)
+    }
+  }
+
 }

@@ -4,20 +4,15 @@ import org.scalatest.FunSuite
 
 class ParserSpec extends FunSuite {
 
-  val parser = new Parser {
-    def parse(str: String): ValueNode = {
-      parse(rison, str) match {
-        case Success(matched, _) => matched
-        case Failure(msg    , _) => fail(msg)
-        case Error  (msg    , _) => fail(msg)
-      }
-    }
-  }
+  val parser = new Parser()
 
   test("Parser"){
     val obj = parser.parse(
       "(name:'Naoki Takezoe',age:39,programming:!(Java,Scala),languages:(english:!f,japanese:!t))"
-    ).asInstanceOf[ObjectNode]
+    ) match {
+      case Right(obj)  => obj.asInstanceOf[ObjectNode]
+      case Left(error) => fail(error)
+    }
 
     assert(obj == ObjectNode(List(
       PropertyNode(StringNode("name"), StringNode("Naoki Takezoe")),
@@ -31,9 +26,6 @@ class ParserSpec extends FunSuite {
         PropertyNode(StringNode("japanese"), BooleanNode(true))
       )))
     )))
-
-
-
   }
 
 }
