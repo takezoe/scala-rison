@@ -1,7 +1,7 @@
 scala-rison
 ========
 
-Rison parser for Scala
+[Rison](https://github.com/Nanonid/rison) parser for Scala
 
 ```scala
 import com.github.takezoe.rison._
@@ -14,7 +14,11 @@ parser.parse("(name:takezoe,age:39)") match {
 }
 // => Map(name -> takezoe, age -> 39)
 
-val node = RisonNode.fromScala(Map("name" -> "takezoe", "age" -> 39))
+val node = RisonNode.fromScala(Map("name" -> "Naoki Takezoe", "age" -> 39))
 println(node.toRisonString)
-// => (name:takezoe,age:39)
+// => (name:'Naoki Takezoe',age:39)
+
+val encoded = node.toUrlEncodedString
+println(encoded)
+// => (name:'Naoki+Takezoe',email:'takezoe@gmail.com')"
 ```

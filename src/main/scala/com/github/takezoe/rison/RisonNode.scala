@@ -1,5 +1,7 @@
 package com.github.takezoe.rison
 
+import java.net.URLEncoder
+
 object RisonNode {
 
   def fromScala(value: Any): RisonNode = {
@@ -14,11 +16,30 @@ object RisonNode {
     }
   }
 
+  private def urlEncode(str: String): String = {
+    URLEncoder.encode(str, "UTF-8")
+      .replace("%7E", "~")
+      .replace("%21", "!")
+      .replace("%2A", "*")
+      .replace("%28", "(")
+      .replace("%29", ")")
+      .replace("%2D", "-")
+      .replace("%5F", "_")
+      .replace("%2E", ".")
+      .replace("%2C", ",")
+      .replace("%3A", ":")
+      .replace("%40", "@")
+      .replace("%24", "$")
+      .replace("%27", "'")
+      .replace("%2F", "/")
+      .replace("%20", "+")
+  }
 }
 
 sealed trait RisonNode {
   def toScala: Any
   def toRisonString: String
+  def toUrlEncodedString: String = RisonNode.urlEncode(toRisonString)
 }
 
 sealed trait ValueNode extends RisonNode
@@ -27,7 +48,7 @@ case class StringNode(value: String) extends ValueNode {
   override def toScala: Any = value
   override def toRisonString: String = quote(value)
 
-  private val RequiredQuote = Seq("'", " ", "\t", "\r", "\n")
+  private val RequiredQuote = Seq(" ", "\t", "\r", "\n", "'", "!", ":", "(", ")", ",", "*", "@", "$")
 
   private def quote(str: String): String = {
     if(RequiredQuote.exists(c => str.indexOf(c) != -1)){

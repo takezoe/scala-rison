@@ -4,10 +4,8 @@ import scala.util.parsing.combinator._
 
 class RisonParser extends RegexParsers {
 
-  override def skipWhitespace: Boolean = false
-
   def int: Parser[IntNode]       = "[0-9]+".r           ^^ { x => IntNode(x.toInt) }
-  def string: Parser[StringNode] = "[^!:(),*@$\\s']+".r ^^ { x => StringNode(x) }
+  def string: Parser[StringNode] = "[^\\s'!:(),@$]+".r  ^^ { x => StringNode(x) }
   def t: Parser[BooleanNode]     = "!t"                 ^^^ BooleanNode(true)
   def f: Parser[BooleanNode]     = "!f"                 ^^^ BooleanNode(false)
   def n: Parser[NullNode]        = "!n"                 ^^^ NullNode()
