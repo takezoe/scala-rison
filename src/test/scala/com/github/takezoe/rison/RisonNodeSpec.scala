@@ -9,7 +9,7 @@ class RisonNodeSpec extends FunSuite {
   test("toScala"){
     val node = ObjectNode(Seq(
       PropertyNode(StringNode("name"), StringNode("Lacazette")),
-      PropertyNode(StringNode("age"), IntNode(27))
+      PropertyNode(StringNode("age"), LongNode(27))
     ))
 
     val map = node.toScala
@@ -22,14 +22,14 @@ class RisonNodeSpec extends FunSuite {
 
     assert(node == ObjectNode(List(
       PropertyNode(StringNode("name"), StringNode("Lacazette")),
-      PropertyNode(StringNode("age"), IntNode(27))
+      PropertyNode(StringNode("age"), LongNode(27))
     )))
   }
 
   test("toRisonString"){
     val node = ObjectNode(Seq(
       PropertyNode(StringNode("name"), StringNode("Alexandre Lacazette")),
-      PropertyNode(StringNode("age"), IntNode(27))
+      PropertyNode(StringNode("age"), LongNode(27))
     ))
     val rison = node.toRisonString
 

@@ -4,15 +4,16 @@ import scala.util.parsing.combinator._
 
 class RisonParser extends RegexParsers {
 
-  def int: Parser[IntNode]       = "[0-9]+".r           ^^ { x => IntNode(x.toInt) }
+  def long: Parser[LongNode]     = "[1-9][0-9]+".r      ^^ { x => LongNode(x.toLong) }
+  def double: Parser[DoubleNode] = "[0-9]+\\.[0-9]+".r  ^^ { x => DoubleNode(x.toDouble) }
   def string: Parser[StringNode] = "[^\\s'!:(),@$]+".r  ^^ { x => StringNode(x) }
   def t: Parser[BooleanNode]     = "!t"                 ^^^ BooleanNode(true)
   def f: Parser[BooleanNode]     = "!f"                 ^^^ BooleanNode(false)
   def n: Parser[NullNode]        = "!n"                 ^^^ NullNode()
-  def quoted: Parser[StringNode] = "'" ~> "((!')|(!!)|[^'])*".r <~ "'"  ^^ { x => StringNode(unescape(x)) }
+  def quoted: Parser[StringNode] = "'" ~> "((!')|[^'])*".r <~ "'"       ^^ { x => StringNode(unescape(x)) }
   def obj: Parser[ObjectNode]    = "("  ~> repsep(property, ",") <~ ")" ^^ { x => ObjectNode(x) }
   def array: Parser[ArrayNode]   = "!(" ~> repsep(value,    ",") <~ ")" ^^ { x => ArrayNode(x) }
-  def value: Parser[ValueNode]   = int | string | quoted | t | f | n | obj | array
+  def value: Parser[ValueNode]   = long | double | string | quoted | t | f | n | obj | array
   def property: Parser[PropertyNode] = string ~ ":" ~ value ^^ { case name ~ _ ~ value => PropertyNode(name, value) }
 
   def rison: Parser[ValueNode] = value

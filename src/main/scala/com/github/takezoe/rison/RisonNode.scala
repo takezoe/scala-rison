@@ -8,7 +8,10 @@ object RisonNode {
     value match {
       case null                       => NullNode()
       case x: String                  => StringNode(x)
-      case x: Int                     => IntNode(x)
+      case x: Int                     => LongNode(x)
+      case x: Long                    => LongNode(x)
+      case x: Double                  => DoubleNode(x)
+      case x: Float                   => DoubleNode(x)
       case x: Boolean                 => BooleanNode(x)
       case (name: String, value: Any) => PropertyNode(StringNode(name), fromScala(value).asInstanceOf[ValueNode])
       case x: Map[String, _]          => ObjectNode (x.map { e => fromScala(e).asInstanceOf[PropertyNode] }.toSeq)
@@ -57,7 +60,12 @@ case class StringNode(value: String) extends ValueNode {
   }
 }
 
-case class IntNode(value: Int) extends ValueNode {
+case class LongNode(value: Long) extends ValueNode {
+  override def toScala: Any = value
+  override def toRisonString: String = value.toString
+}
+
+case class DoubleNode(value: Double) extends ValueNode {
   override def toScala: Any = value
   override def toRisonString: String = value.toString
 }
