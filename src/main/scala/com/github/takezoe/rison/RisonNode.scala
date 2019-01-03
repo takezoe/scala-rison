@@ -79,10 +79,12 @@ case class PropertyNode(key: StringNode, value: ValueNode) extends RisonNode {
 
 case class ObjectNode(values: Seq[PropertyNode]) extends ValueNode {
   override def toScala: Any = Map[String, Any](values.map { x => x.key.value -> x.value.toScala }:_*)
-  override def toRisonString: String = "(" + values.map(_.toRisonString).mkString(",") + ")"
+  override def toRisonString: String = "(" + toObjectString + ")"
+  def toObjectString: String = values.map(_.toRisonString).mkString(",")
 }
 
 case class ArrayNode(values: Seq[ValueNode]) extends ValueNode {
   override def toScala: Any = Seq[Any](values.map(_.toScala):_*)
-  override def toRisonString: String = "!(" + values.map(_.toRisonString).mkString(",") + ")"
+  override def toRisonString: String = "!(" + toArrayString + ")"
+  def toArrayString: String = values.map(_.toRisonString).mkString(",")
 }

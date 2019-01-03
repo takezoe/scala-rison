@@ -45,6 +45,9 @@ class RisonParser extends RegexParsers {
     }
   }
 
+  def parseObject(str: String): ObjectNode = parse("(" + str + ")").asInstanceOf[ObjectNode]
+  def parseArray(str: String): ArrayNode = parse("!(" + str + ")").asInstanceOf[ArrayNode]
+
   private class RisonParseException(message: String) extends RuntimeException(message)
 
 }
