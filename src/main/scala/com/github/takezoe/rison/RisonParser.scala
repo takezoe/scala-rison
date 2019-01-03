@@ -2,11 +2,21 @@ package com.github.takezoe.rison
 
 import scala.util.parsing.combinator._
 
-class Parser extends RegexParsers {
+sealed trait AST
+sealed trait ValueNode extends AST
+case class StringNode(value: String) extends ValueNode
+case class IntNode(value: Int) extends ValueNode
+case class BooleanNode(value: Boolean) extends ValueNode
+case class NullNode() extends ValueNode
+case class PropertyNode(key: StringNode, value: ValueNode)
+case class ObjectNode(values: Seq[PropertyNode]) extends ValueNode
+case class ArrayNode(values: Seq[ValueNode]) extends ValueNode
+
+class RisonParser extends RegexParsers {
 
   override def skipWhitespace: Boolean = false
 
-  def integer: Parser[IntNode]   = "[0-9]+".r           ^^ { x => IntNode(x.toInt) }
+  def int: Parser[IntNode]       = "[0-9]+".r           ^^ { x => IntNode(x.toInt) }
   def string: Parser[StringNode] = "[^!:(),*@$\\s']+".r ^^ { x => StringNode(x) }
   def t: Parser[BooleanNode]     = "!t"                 ^^^ BooleanNode(true)
   def f: Parser[BooleanNode]     = "!f"                 ^^^ BooleanNode(false)
@@ -14,7 +24,7 @@ class Parser extends RegexParsers {
   def quoted: Parser[StringNode] = "'" ~> "((!')|(!!)|[^'])*".r <~ "'"  ^^ { x => StringNode(unescape(x)) }
   def obj: Parser[ObjectNode]    = "("  ~> repsep(property, ",") <~ ")" ^^ { x => ObjectNode(x) }
   def array: Parser[ArrayNode]   = "!(" ~> repsep(value,    ",") <~ ")" ^^ { x => ArrayNode(x) }
-  def value: Parser[ValueNode]   = integer | string | quoted | t | f | n | obj | array
+  def value: Parser[ValueNode]   = int | string | quoted | t | f | n | obj | array
   def property: Parser[PropertyNode] = string ~ ":" ~ value ^^ { case name ~ _ ~ value => PropertyNode(name, value) }
 
   def rison: Parser[ValueNode] = value

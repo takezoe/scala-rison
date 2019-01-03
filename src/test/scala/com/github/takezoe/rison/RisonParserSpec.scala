@@ -2,9 +2,9 @@ package com.github.takezoe.rison
 
 import org.scalatest.FunSuite
 
-class ParserSpec extends FunSuite {
+class RisonParserSpec extends FunSuite {
 
-  val parser = new Parser()
+  val parser = new RisonParser()
 
   test("Parser"){
     val obj = parser.parse(
