@@ -8,50 +8,50 @@ class RisonNodeSpec extends FunSuite {
 
   test("toScala"){
     val node = ObjectNode(Seq(
-      PropertyNode(StringNode("name"), StringNode("takezoe")),
-      PropertyNode(StringNode("age"), IntNode(39))
+      PropertyNode(StringNode("name"), StringNode("Lacazette")),
+      PropertyNode(StringNode("age"), IntNode(27))
     ))
 
     val map = node.toScala
-    assert(map == Map("name" -> "takezoe", "age" -> 39))
+    assert(map == Map("name" -> "Lacazette", "age" -> 27))
   }
 
   test("toRison"){
-    val map = Map("name" -> "takezoe", "age" -> 39)
+    val map = Map("name" -> "Lacazette", "age" -> 27)
     val node = RisonNode.fromScala(map)
 
     assert(node == ObjectNode(List(
-      PropertyNode(StringNode("name"), StringNode("takezoe")),
-      PropertyNode(StringNode("age"), IntNode(39))
+      PropertyNode(StringNode("name"), StringNode("Lacazette")),
+      PropertyNode(StringNode("age"), IntNode(27))
     )))
   }
 
   test("toRisonString"){
     val node = ObjectNode(Seq(
-      PropertyNode(StringNode("name"), StringNode("Naoki Takezoe")),
-      PropertyNode(StringNode("age"), IntNode(39))
+      PropertyNode(StringNode("name"), StringNode("Alexandre Lacazette")),
+      PropertyNode(StringNode("age"), IntNode(27))
     ))
     val rison = node.toRisonString
 
-    assert(rison == "(name:'Naoki Takezoe',age:39)")
+    assert(rison == "(name:'Alexandre Lacazette',age:27)")
   }
 
   test("toUrlEncodedString"){
-    val node = RisonNode.fromScala(Map("name" -> "Naoki Takezoe", "email" -> "takezoe@gmail.com"))
+    val node = RisonNode.fromScala(Map("name" -> "Alexandre Lacazette", "twitter" -> "@LacazetteAlex"))
     val encoded = node.toUrlEncodedString
-    assert(encoded == "(name:'Naoki+Takezoe',email:'takezoe@gmail.com')")
+    assert(encoded == "(name:'Alexandre+Lacazette',twitter:'@LacazetteAlex')")
   }
 
   test("urlDecode"){
-    val encoded = "(name:'Naoki+Takezoe',email:'takezoe@gmail.com')"
+    val encoded = "(name:'Alexandre+Lacazette',twitter:'@LacazetteAlex')"
     val decoded = URLDecoder.decode(encoded, "UTF-8")
 
     val parser = new RisonParser()
     parser.parse(decoded) match {
       case Right(node) =>
         assert(node == ObjectNode(List(
-          PropertyNode(StringNode("name"), StringNode("Naoki Takezoe")),
-          PropertyNode(StringNode("email"), StringNode("takezoe@gmail.com"))
+          PropertyNode(StringNode("name"), StringNode("Alexandre Lacazette")),
+          PropertyNode(StringNode("twitter"), StringNode("@LacazetteAlex"))
         )))
       case Left(error) =>
         fail(error)
