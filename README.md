@@ -12,11 +12,9 @@ parser.parse("(name:takezoe,age:39)") match {
   case Right(obj)  => println(obj.toScala)
   case Left(error) => println(error)
 }
-
 // => Map(name -> takezoe, age -> 39)
 
 val node = RisonNode.fromScala(Map("name" -> "takezoe", "age" -> 39))
 println(node.toRisonString)
-
 // => (name:takezoe,age:39)
 ```
