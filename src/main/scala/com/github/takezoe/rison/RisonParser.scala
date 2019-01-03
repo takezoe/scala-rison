@@ -2,33 +2,15 @@ package com.github.takezoe.rison
 
 import scala.util.parsing.combinator._
 
-sealed trait AST {
-  def toScala: Any
-}
+sealed trait AST
 sealed trait ValueNode extends AST
-case class StringNode(value: String) extends ValueNode {
-  override def toScala: Any = value
-}
-case class IntNode(value: Int) extends ValueNode {
-  override def toScala: Any = value
-}
-case class BooleanNode(value: Boolean) extends ValueNode {
-  override def toScala: Any = value
-}
-case class NullNode() extends ValueNode {
-  override def toScala: Any = null // or None?
-}
-case class PropertyNode(key: StringNode, value: ValueNode) extends AST {
-  override def toScala: Any = key.value -> value.toScala
-}
-case class ObjectNode(values: Seq[PropertyNode]) extends ValueNode {
-  override def toScala: Any = Map[String, Any](values.map { property =>
-    property.key.value -> property.value.toScala
-  }:_*)
-}
-case class ArrayNode(values: Seq[ValueNode]) extends ValueNode {
-  override def toScala: Any = Seq[Any](values.map(_.toScala):_*)
-}
+case class StringNode(value: String) extends ValueNode
+case class IntNode(value: Int) extends ValueNode
+case class BooleanNode(value: Boolean) extends ValueNode
+case class NullNode() extends ValueNode
+case class PropertyNode(key: StringNode, value: ValueNode) extends AST
+case class ObjectNode(values: Seq[PropertyNode]) extends ValueNode
+case class ArrayNode(values: Seq[ValueNode]) extends ValueNode
 
 class RisonParser extends RegexParsers {
 
@@ -78,3 +60,4 @@ class RisonParser extends RegexParsers {
   private class RisonParseException(message: String) extends RuntimeException(message)
 
 }
+
