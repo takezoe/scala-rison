@@ -24,4 +24,14 @@ class RisonConverterSpec extends FunSuite {
       PropertyNode(StringNode("age"), IntNode(39))
     )))
   }
+
+  test("toString"){
+    val node = ObjectNode(Seq(
+      PropertyNode(StringNode("name"), StringNode("Naoki Takezoe")),
+      PropertyNode(StringNode("age"), IntNode(39))
+    ))
+    val rison = toRisonString(node)
+
+    assert(rison == "(name:'Naoki Takezoe',age:39)")
+  }
 }

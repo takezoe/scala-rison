@@ -27,4 +27,23 @@ object RisonConverter {
     }
   }
 
+  def toRisonString(node: AST): String = {
+    node match {
+      case StringNode(value)         => quote(value)
+      case IntNode(value)            => value.toString
+      case BooleanNode(value)        => if(value) "!t" else "!f"
+      case NullNode()                => "!n"
+      case PropertyNode(name, value) => toRisonString(name) + ":" + toRisonString(value)
+      case ObjectNode(values)        => "("  + values.map(toRisonString).mkString(",") + ")"
+      case ArrayNode(values)         => "!(" + values.map(toRisonString).mkString(",") + ")"
+    }
+  }
+
+  private val RequiredQuote = Seq("'", " ", "\t", "\r", "\n")
+
+  private def quote(str: String): String = {
+    if(RequiredQuote.exists(c => str.indexOf(c) != -1)){
+      "'" + str.replace("!", "!!").replace("'", "!'") + "'"
+    } else str
+  }
 }
