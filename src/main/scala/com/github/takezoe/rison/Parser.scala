@@ -8,9 +8,9 @@ class Parser extends RegexParsers {
 
   def integer: Parser[IntNode]   = "[0-9]+".r           ^^ { x => IntNode(x.toInt) }
   def string: Parser[StringNode] = "[^!:(),*@$\\s']+".r ^^ { x => StringNode(x) }
-  def t: Parser[BooleanNode]     = "!t"                 ^^ { _ => BooleanNode(true) }
-  def f: Parser[BooleanNode]     = "!f"                 ^^ { _ => BooleanNode(false) }
-  def n: Parser[NullNode]        = "!n"                 ^^ { _ => NullNode() }
+  def t: Parser[BooleanNode]     = "!t"                 ^^^ BooleanNode(true)
+  def f: Parser[BooleanNode]     = "!f"                 ^^^ BooleanNode(false)
+  def n: Parser[NullNode]        = "!n"                 ^^^ NullNode()
   def quoted: Parser[StringNode] = "'" ~> "((!')|(!!)|[^'])*".r <~ "'"  ^^ { x => StringNode(unescape(x)) }
   def obj: Parser[ObjectNode]    = "("  ~> repsep(property, ",") <~ ")" ^^ { x => ObjectNode(x) }
   def array: Parser[ArrayNode]   = "!(" ~> repsep(value,    ",") <~ ")" ^^ { x => ArrayNode(x) }
@@ -20,6 +20,15 @@ class Parser extends RegexParsers {
   def rison: Parser[ValueNode] = value
 
   private def unescape(str: String): String = {
-    str.replace("!!", "!").replace("!'", "'")
+    val sb = new StringBuilder()
+    var escaping = false
+    str.foreach {
+      case '!'  if escaping == false => escaping = true
+      case '!'  if escaping == true  => sb.append('!'); escaping = false
+      case '\'' if escaping == true  => sb.append('\''); escaping = false
+      case c    if escaping == true  => throw new RuntimeException(s"Invalid Escape: !${c}")
+      case c                         => sb.append(c)
+    }
+    sb.toString
   }
 }
