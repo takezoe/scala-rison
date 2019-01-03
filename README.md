@@ -8,9 +8,9 @@ import com.github.takezoe.rison._
 
 val parser = new RisonParser()
 parser.parse("(name:takezoe,age:39)") match {
-  case Right(obj)  => println(obj)
+  case Right(obj)  => println(obj.toScala)
   case Left(error) => println(error)
 }
 
-// => ObjectNode(List(PropertyNode(StringNode(name),StringNode(takezoe)), PropertyNode(StringNode(age),IntNode(39)))
+// => Map(name -> takezoe, age -> 39)
 ```
