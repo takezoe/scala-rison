@@ -1,9 +1,8 @@
 package com.github.takezoe.rison
 
 import org.scalatest.FunSuite
-import RisonConverter._
 
-class RisonConverterSpec extends FunSuite {
+class RisonNodeSpec extends FunSuite {
 
   test("toScala"){
     val node = ObjectNode(Seq(
@@ -11,13 +10,13 @@ class RisonConverterSpec extends FunSuite {
       PropertyNode(StringNode("age"), IntNode(39))
     ))
 
-    val map = toScala(node)
+    val map = node.toScala
     assert(map == Map("name" -> "takezoe", "age" -> 39))
   }
 
   test("toRison"){
     val map = Map("name" -> "takezoe", "age" -> 39)
-    val node = toRison(map)
+    val node = RisonNode.fromScala(map)
 
     assert(node == ObjectNode(List(
       PropertyNode(StringNode("name"), StringNode("takezoe")),
@@ -30,7 +29,7 @@ class RisonConverterSpec extends FunSuite {
       PropertyNode(StringNode("name"), StringNode("Naoki Takezoe")),
       PropertyNode(StringNode("age"), IntNode(39))
     ))
-    val rison = toRisonString(node)
+    val rison = node.toRisonString
 
     assert(rison == "(name:'Naoki Takezoe',age:39)")
   }
