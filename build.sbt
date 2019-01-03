@@ -2,7 +2,7 @@ name := "scala-rison"
 
 organization := "com.github.takezoe"
 
-version := "0.0.1"
+version := "0.0.2-SNAPSHOT"
 
 scalaVersion := "2.12.8"
 
@@ -34,7 +34,7 @@ pomExtra := (
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/takezoe/scala-retry</url>
+    <url>https://github.com/takezoe/scala-rison</url>
     <connection>scm:git:https://github.com/takezoe/scala-rison.git</connection>
   </scm>
   <developers>
