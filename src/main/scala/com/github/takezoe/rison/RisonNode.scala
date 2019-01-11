@@ -2,7 +2,15 @@ package com.github.takezoe.rison
 
 import java.net.URLEncoder
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import scala.reflect.ClassTag
+
+
 object RisonNode {
+
+  val mapper = new ObjectMapper
+  mapper.registerModule(DefaultScalaModule)
 
   def fromScala(value: Any): RisonNode = {
     value match {
@@ -15,7 +23,11 @@ object RisonNode {
       case x: Boolean                 => BooleanNode(x)
       case (name: String, value: Any) => PropertyNode(StringNode(name), fromScala(value).asInstanceOf[ValueNode])
       case x: Map[String, _]          => ObjectNode (x.map { e => fromScala(e).asInstanceOf[PropertyNode] }.toSeq)
-      case x: Seq[_]                  => ArrayNode  (x.map { e => fromScala(e).asInstanceOf[ValueNode]    })
+      case x: Seq[_]                  => ArrayNode  (x.map { e => fromScala(e).asInstanceOf[ValueNode] })
+      case x => {
+        val json = mapper.writeValueAsString(x)
+        fromScala(mapper.readValue(json, classOf[Map[String, Any]]))
+      }
     }
   }
 
@@ -86,6 +98,10 @@ case class PropertyNode(key: StringNode, value: ValueNode) extends RisonNode {
 }
 
 case class ObjectNode(values: Seq[PropertyNode]) extends ValueNode {
+  def to[T](implicit c: ClassTag[T]): T = {
+    val json = RisonNode.mapper.writeValueAsString(toScala)
+    RisonNode.mapper.readValue(json, c.runtimeClass).asInstanceOf[T]
+  }
   override def toScala: Any = Map[String, Any](values.map { x => x.key.value -> x.value.toScala }:_*)
   override def toRisonString: String = "(" + toObjectString + ")"
   def toObjectString: String = values.map(_.toRisonString).mkString(",")

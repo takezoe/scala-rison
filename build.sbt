@@ -8,6 +8,8 @@ scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.8",
+  "org.scala-lang" % "scala-reflect" % scalaVersion.value,
   "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 )
 

@@ -4,7 +4,22 @@ import java.net.URLDecoder
 
 import org.scalatest.FunSuite
 
+// TODO Inner class isn't supported by jackson-scala-module.
+case class Player(name: String, age: Int)
+
 class RisonNodeSpec extends FunSuite {
+
+  test("case class"){
+    val node = RisonNode.fromScala(Player("Lacazette", 27))
+
+    assert(node == ObjectNode(List(
+      PropertyNode(StringNode("name"), StringNode("Lacazette")),
+      PropertyNode(StringNode("age"), LongNode(27))
+    )))
+
+    val player = node.asInstanceOf[ObjectNode].to[Player]
+    assert(player == Player("Lacazette", 27))
+  }
 
   test("toScala"){
     val node = ObjectNode(Seq(
