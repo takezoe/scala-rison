@@ -2,9 +2,46 @@ package com.github.takezoe.rison
 
 import java.net.URLEncoder
 
+import wvlet.airframe.surface.Surface
+import wvlet.airframe.surface.reflect.ReflectTypeUtil
+
+import scala.reflect.runtime.universe._
+
 object RisonNode {
 
-  def fromScala(value: Any): RisonNode = {
+  def fromScala[T: TypeTag](value: T): RisonNode = {
+    val surface = Surface.of[T]
+    encodeValue(value, surface)
+  }
+
+  private def encodeValue(value: Any, surface: Surface): RisonNode = {
+    if(surface.name == "Any"){ // fallback reflection mode
+      encodePrimitive(value)
+
+    } else if(surface.isPrimitive){
+      encodePrimitive(value)
+
+    } else if(surface.isOption){
+      value match {
+        case None    => NullNode()
+        case Some(x) => encodeValue(x, surface.typeArgs(0))
+      }
+    } else if(ReflectTypeUtil.isSeq(surface.rawType)){
+      ArrayNode(value.asInstanceOf[Seq[_]].map { x =>
+        encodeValue(x, surface.typeArgs(0)).asInstanceOf[ValueNode]
+      })
+    } else if(ReflectTypeUtil.isMap(surface.rawType)){
+      ObjectNode(value.asInstanceOf[Map[String, _]].map { case (name, x) =>
+          PropertyNode(StringNode(name), encodeValue(x, surface.typeArgs(1)).asInstanceOf[ValueNode])
+      }.toSeq)
+    } else {
+      ObjectNode(surface.params.map { p =>
+        PropertyNode(StringNode(p.name), encodeValue(p.get(value), p.surface).asInstanceOf[ValueNode])
+      })
+    }
+  }
+
+  private def encodePrimitive(value: Any): RisonNode = {
     value match {
       case null                       => NullNode()
       case x: String                  => StringNode(x)
@@ -13,9 +50,9 @@ object RisonNode {
       case x: Double                  => DoubleNode(x)
       case x: Float                   => DoubleNode(x)
       case x: Boolean                 => BooleanNode(x)
-      case (name: String, value: Any) => PropertyNode(StringNode(name), fromScala(value).asInstanceOf[ValueNode])
-      case x: Map[String, _]          => ObjectNode (x.map { e => fromScala(e).asInstanceOf[PropertyNode] }.toSeq)
-      case x: Seq[_]                  => ArrayNode  (x.map { e => fromScala(e).asInstanceOf[ValueNode]    })
+      case (name: String, value: Any) => PropertyNode(StringNode(name), encodePrimitive(value).asInstanceOf[ValueNode])
+      case x: Map[String, _]          => ObjectNode (x.map { e => encodePrimitive(e).asInstanceOf[PropertyNode] }.toSeq)
+      case x: Seq[_]                  => ArrayNode  (x.map { e => encodePrimitive(e).asInstanceOf[ValueNode] })
     }
   }
 
