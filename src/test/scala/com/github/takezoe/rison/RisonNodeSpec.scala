@@ -4,7 +4,12 @@ import java.net.URLDecoder
 
 import org.scalatest.FunSuite
 
+object RisonNodeSpec {
+  case class Player(name: String, age: Int)
+}
+
 class RisonNodeSpec extends FunSuite {
+  import RisonNodeSpec._
 
   test("toScala"){
     val node = ObjectNode(Seq(
@@ -12,15 +17,30 @@ class RisonNodeSpec extends FunSuite {
       PropertyNode(StringNode("age"), LongNode(27))
     ))
 
+    // to Map
     val map = node.toScala
     assert(map == Map("name" -> "Lacazette", "age" -> 27))
+
+    // to Case class
+    val obj = node.to[Player]
+    assert(obj == Player("Lacazette", 27))
   }
 
   test("toRison"){
+    // from Map
     val map = Map("name" -> "Lacazette", "age" -> 27)
-    val node = RisonNode.fromScala(map)
+    val node1 = RisonNode.fromScala(map)
 
-    assert(node == ObjectNode(List(
+    assert(node1 == ObjectNode(List(
+      PropertyNode(StringNode("name"), StringNode("Lacazette")),
+      PropertyNode(StringNode("age"), LongNode(27))
+    )))
+
+    // from Case class
+    val obj = Player("Lacazette", 27)
+    val node2 = RisonNode.fromScala(obj)
+
+    assert(node2 == ObjectNode(List(
       PropertyNode(StringNode("name"), StringNode("Lacazette")),
       PropertyNode(StringNode("age"), LongNode(27))
     )))

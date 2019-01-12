@@ -17,18 +17,30 @@ import com.github.takezoe.rison._
 
 val parser = new RisonParser()
 
+// case class
+case class Player(name: String, age: Int)
+
 // parse
 parser.parse("(name:Lacazette,age:27)") match {
-  case Right(node) => println(node.toScala) // => Map(name -> Lacazette, age -> 27)
+  case Right(node) => {
+    // to Scala Map
+    println(node.toScala) // => Map(name -> Lacazette, age -> 27)
+    // to Case class
+    println(node.asInstanceOf[ObjectNode].to[Player]) // => Player(Lacazette, 27)
+  }
   case Left(error) => println(error)
 }
 
-// convert from Scala's Map
-val node: RisonNode = RisonNode.fromScala(Map("name" -> "Alexandre Lacazette", "twitter" -> "@LacazetteAlex"))
-println(node.toRisonString) // => (name:'Alexandre Lacazette',twitter:'@LacazetteAlex')
+// convert from Case class
+val node1: RisonNode = RisonNode.fromScala(Player("Lacazette", 27))
+println(node1.toRisonString) // => (name:Lacazette',age:27)
+
+// convert from Scala Map
+val node2: RisonNode = RisonNode.fromScala(Map("name" -> "Alexandre Lacazette", "twitter" -> "@LacazetteAlex"))
+println(node2.toRisonString) // => (name:'Alexandre Lacazette',twitter:'@LacazetteAlex')
 
 // URL encode
-val encoded: String = node.toUrlEncodedString
+val encoded: String = node2.toUrlEncodedString
 println(encoded) // => (name:'Alexandre+Lacazette',twitter:'@LacazetteAlex')
 
 // o-rison
