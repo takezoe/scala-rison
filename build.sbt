@@ -8,7 +8,8 @@ scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
-  "org.wvlet.airframe" %% "airframe-surface" % "0.78",
+  "org.wvlet.airframe" %% "airframe-codec" % "0.79",
+  "org.wvlet.airframe" %% "airframe-surface" % "0.79",
   "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 )
 
