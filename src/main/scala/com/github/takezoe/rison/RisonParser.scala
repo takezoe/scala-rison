@@ -2,7 +2,7 @@ package com.github.takezoe.rison
 
 import scala.util.parsing.combinator._
 
-class RisonParser extends RegexParsers {
+object RisonParser extends RegexParsers {
 
   def long: Parser[LongNode]     = "[1-9][0-9]+".r      ^^ { x => LongNode(x.toLong) }
   def double: Parser[DoubleNode] = "[0-9]+\\.[0-9]+".r  ^^ { x => DoubleNode(x.toDouble) }

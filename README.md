@@ -6,7 +6,7 @@ scala-rison [![Build Status](https://travis-ci.org/takezoe/scala-rison.svg?branc
 ## Installation
 
 ```scala
-libraryDependencies += "com.github.takezoe" %% "scala-rison" % "0.0.2"
+libraryDependencies += "com.github.takezoe" %% "scala-rison" % "0.0.3"
 ```
 
 ## Usage
@@ -15,13 +15,11 @@ libraryDependencies += "com.github.takezoe" %% "scala-rison" % "0.0.2"
 ```scala
 import com.github.takezoe.rison._
 
-val parser = new RisonParser()
-
 // case class
 case class Player(name: String, age: Int)
 
 // parse
-parser.parse("(name:Lacazette,age:27)") match {
+RisonParser.parse("(name:Lacazette,age:27)") match {
   case Right(node) => {
     // to Scala Map
     println(node.toScala) // => Map(name -> Lacazette, age -> 27)
@@ -44,10 +42,10 @@ val encoded: String = node2.toUrlEncodedString
 println(encoded) // => (name:'Alexandre+Lacazette',twitter:'@LacazetteAlex')
 
 // o-rison
-val orison: ObjectNode = parser.parseObject("name:Lacazette,age:27")
+val orison: ObjectNode = RisonParser.parseObject("name:Lacazette,age:27")
 println(orison.toObjectString) // => name:Lacazette,age:27
 
 // a-rison
-val arison: ArrayNode = parser.parseArray("Lacazette,Aubameyang,Ozil")
+val arison: ArrayNode = RisonParser.parseArray("Lacazette,Aubameyang,Ozil")
 println(arison.toArrayString) // => Lacazette,Aubameyang,Ozil
 ```

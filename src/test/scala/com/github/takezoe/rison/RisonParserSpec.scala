@@ -4,10 +4,8 @@ import org.scalatest.FunSuite
 
 class RisonParserSpec extends FunSuite {
 
-  val parser = new RisonParser()
-
   test("Parser"){
-    val obj = parser.parse(
+    val obj = RisonParser.parse(
       "(name:'Naoki Takezoe',age:39,programming:!((name:Java,ratio:0.2),(name:Scala,ratio:0.8)),languages:(english:!f,japanese:!t))"
     ) match {
       case Right(obj)  => obj.asInstanceOf[ObjectNode]

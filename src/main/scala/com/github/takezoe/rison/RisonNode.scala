@@ -3,7 +3,6 @@ package com.github.takezoe.rison
 import java.net.URLEncoder
 
 import wvlet.airframe.surface.Surface
-import wvlet.airframe.surface.reflect.ReflectSurfaceFactory.RuntimeGenericSurface
 import wvlet.airframe.surface.reflect.ReflectTypeUtil
 
 import scala.reflect.runtime.universe._
