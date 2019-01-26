@@ -66,8 +66,7 @@ class RisonNodeSpec extends FunSuite {
     val encoded = "(name:'Alexandre+Lacazette',twitter:'@LacazetteAlex')"
     val decoded = URLDecoder.decode(encoded, "UTF-8")
 
-    val parser = new RisonParser()
-    parser.parse(decoded) match {
+    RisonParser.parse(decoded) match {
       case Right(node) =>
         assert(node == ObjectNode(List(
           PropertyNode(StringNode("name"), StringNode("Alexandre Lacazette")),
