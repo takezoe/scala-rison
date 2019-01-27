@@ -1,4 +1,4 @@
-scala-rison [![Build Status](https://travis-ci.org/takezoe/scala-rison.svg?branch=master)](https://travis-ci.org/takezoe/scala-rison) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.takezoe/scala-rison_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.takezoe/scala-rison_2.12) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/gitbucket/gitbucket/blob/master/LICENSE)
+scala-rison [![Build Status](https://travis-ci.org/takezoe/scala-rison.svg?branch=master)](https://travis-ci.org/takezoe/scala-rison) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.takezoe/scala-rison_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.takezoe/scala-rison_2.12) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/takezoe/scala-rison/blob/master/LICENSE)
 ========
 
 [Rison](https://github.com/Nanonid/rison) parser for Scala
