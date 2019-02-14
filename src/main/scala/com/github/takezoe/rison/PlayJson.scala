@@ -25,7 +25,14 @@ object PlayJson {
       }.toSeq)
       case JsArray(values)  => ArrayNode(values.map(fromPlayJson))
       case JsString(value)  => StringNode(value)
-      case JsNumber(value)  => DoubleNode(value.toDouble) // TODO
+      case JsNumber(value)  =>
+        if(value.isValidLong){
+          LongNode(value.toLong)
+        } else if(value.isDecimalDouble){
+          DoubleNode(value.toDouble)
+        } else {
+          StringNode(value.toString)
+        }
       case JsBoolean(value) => BooleanNode(value)
       case JsNull           => NullNode()
     }
