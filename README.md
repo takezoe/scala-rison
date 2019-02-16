@@ -34,7 +34,9 @@ val node1: RisonNode = RisonNode.fromScala(Player("Lacazette", 27))
 println(node1.toRisonString) // => (name:Lacazette',age:27)
 
 // convert from Scala Map
-val node2: RisonNode = RisonNode.fromScala(Map("name" -> "Alexandre Lacazette", "twitter" -> "@LacazetteAlex"))
+val node2: RisonNode = RisonNode.fromScala(
+  Map("name" -> "Alexandre Lacazette", "twitter" -> "@LacazetteAlex")
+)
 println(node2.toRisonString) // => (name:'Alexandre Lacazette',twitter:'@LacazetteAlex')
 
 // URL encode
