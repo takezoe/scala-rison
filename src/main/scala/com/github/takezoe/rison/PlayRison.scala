@@ -2,7 +2,7 @@ package com.github.takezoe.rison
 
 import play.api.libs.json._
 
-object PlayJson {
+object PlayRison {
 
   def toPlayJson(node: ValueNode): JsValue = {
     node match {
