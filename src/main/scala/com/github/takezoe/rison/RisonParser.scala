@@ -4,7 +4,7 @@ import scala.util.parsing.combinator._
 
 object RisonParser extends RegexParsers {
 
-  def long: Parser[LongNode]     = "[1-9][0-9]+".r      ^^ { x => LongNode(x.toLong) }
+  def long: Parser[LongNode]     = "[1-9][0-9]*".r      ^^ { x => LongNode(x.toLong) }
   def double: Parser[DoubleNode] = "[0-9]+\\.[0-9]+".r  ^^ { x => DoubleNode(x.toDouble) }
   def string: Parser[StringNode] = "[^\\s'!:(),@$]+".r  ^^ { x => StringNode(x) }
   def t: Parser[BooleanNode]     = "!t"                 ^^^ BooleanNode(true)
