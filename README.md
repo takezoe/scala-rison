@@ -51,3 +51,27 @@ println(orison.toObjectString) // => name:Lacazette,age:27
 val arison: ArrayNode = RisonParser.parseArray("Lacazette,Aubameyang,Ozil")
 println(arison.toArrayString) // => Lacazette,Aubameyang,Ozil
 ```
+
+## Play JSON integration
+
+By using play-json with scala-rison, you can convert Rison and Json each other and also use play-json's the ability of type-safe case class conversion.
+
+You need to add following play-json dependency additionally to use pla-json integration:
+
+```scala
+libraryDependencies += "com.github.takezoe" %% "scala-rison" % "2.6.10"
+```
+
+Json to Rison:
+
+```scala
+val json = Json.parse("""{"name":"Lacazette","age":27}""")
+val rison = PlayRison.fromPlayJson(json)
+```
+
+Rison to Json:
+
+```scala
+val rison = RisonParser.parse("(name:Lacazette,age:27)").right.get
+val json = PlayRison.toPlayJson(rison)
+```
