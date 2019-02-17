@@ -59,7 +59,7 @@ By using [play-json](https://github.com/playframework/play-json) with scala-riso
 You need to add following play-json dependency additionally to use pla-json integration:
 
 ```scala
-libraryDependencies += "com.github.takezoe" %% "scala-rison" % "2.6.10"
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 ```
 
 Json to Rison:
