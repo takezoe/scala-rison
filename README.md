@@ -62,16 +62,13 @@ You need to add following play-json dependency additionally to use pla-json inte
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 ```
 
-Json to Rison:
 
 ```scala
-val json = Json.parse("""{"name":"Lacazette","age":27}""")
-val rison = PlayRison.fromPlayJson(json)
-```
+// Json to Rison
+val json1 = Json.parse("""{"name":"Lacazette","age":27}""")
+val rison1 = PlayRison.fromPlayJson(json1)
 
-Rison to Json:
-
-```scala
-val rison = RisonParser.parse("(name:Lacazette,age:27)").right.get
-val json = PlayRison.toPlayJson(rison)
+// Rison to Json
+val rison2 = RisonParser.parse("(name:Lacazette,age:27)").right.get
+val json2 = PlayRison.toPlayJson(rison2)
 ```
