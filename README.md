@@ -67,8 +67,10 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.10"
 // Json to Rison
 val json1 = Json.parse("""{"name":"Lacazette","age":27}""")
 val rison1 = PlayRison.fromPlayJson(json1)
+println(rison1) // => (name:Lacazette,age:27)
 
 // Rison to Json
 val rison2 = RisonParser.parse("(name:Lacazette,age:27)").right.get
 val json2 = PlayRison.toPlayJson(rison2)
+println(json2) // => {"name":"Lacazette","age":27}
 ```
