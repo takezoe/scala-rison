@@ -54,7 +54,7 @@ println(arison.toArrayString) // => Lacazette,Aubameyang,Ozil
 
 ## Play JSON integration
 
-By using play-json with scala-rison, you can convert Rison and Json each other and also use play-json's the ability of type-safe case class conversion.
+By using [play-json](https://github.com/playframework/play-json) with scala-rison, you can convert Rison and Json each other and also use play-json's the ability of type-safe case class conversion.
 
 You need to add following play-json dependency additionally to use pla-json integration:
 
