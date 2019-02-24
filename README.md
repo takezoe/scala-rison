@@ -6,7 +6,7 @@ scala-rison [![Build Status](https://travis-ci.org/takezoe/scala-rison.svg?branc
 ## Installation
 
 ```scala
-libraryDependencies += "com.github.takezoe" %% "scala-rison" % "0.0.3"
+libraryDependencies += "com.github.takezoe" %% "scala-rison" % "0.0.4"
 ```
 
 ## Usage
