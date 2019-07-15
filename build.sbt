@@ -2,16 +2,18 @@ name := "scala-rison"
 
 organization := "com.github.takezoe"
 
-version := "0.0.4"
+version := "0.0.5-SNAPSHOT"
 
 scalaVersion := "2.12.8"
 
+crossScalaVersions := Seq("2.12.8", "2.13.0")
+
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
-  "org.wvlet.airframe" %% "airframe-surface" % "0.79",
-  "org.wvlet.airframe" %% "airframe-codec" % "0.79" % "optional",
-  "com.typesafe.play" %% "play-json" % "2.6.10" % "optional",
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
+  "org.wvlet.airframe" %% "airframe-surface" % "19.7.3",
+  "org.wvlet.airframe" %% "airframe-codec" % "19.7.3" % "optional",
+  "com.typesafe.play" %% "play-json" % "2.7.3" % "optional", // TODO Scala 2.13 build is not available yet
+  "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 )
 
 publishMavenStyle := true
