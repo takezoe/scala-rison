@@ -23,7 +23,7 @@ object PlayRison {
       case JsObject(values) => ObjectNode(values.map { case (key, value) =>
           PropertyNode(StringNode(key), fromPlayJson(value))
       }.toSeq)
-      case JsArray(values)  => ArrayNode(values.map(fromPlayJson))
+      case JsArray(values)  => ArrayNode(values.map(fromPlayJson).toSeq)
       case JsString(value)  => StringNode(value)
       case JsNumber(value)  =>
         if(value.isValidLong){
