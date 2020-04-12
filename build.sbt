@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
   "org.wvlet.airframe" %% "airframe-surface" % "19.7.3",
   "org.wvlet.airframe" %% "airframe-codec" % "19.7.3" % "optional",
-  "com.typesafe.play" %% "play-json" % "2.7.3" % "optional", // TODO Scala 2.13 build is not available yet
+  "com.typesafe.play" %% "play-json" % "2.8.1" % "optional",
   "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 )
 
