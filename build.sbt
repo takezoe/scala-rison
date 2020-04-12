@@ -4,9 +4,9 @@ organization := "com.github.takezoe"
 
 version := "0.0.5-SNAPSHOT"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.11"
 
-crossScalaVersions := Seq("2.12.8", "2.13.0")
+crossScalaVersions := Seq("2.12.11", "2.13.1")
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
