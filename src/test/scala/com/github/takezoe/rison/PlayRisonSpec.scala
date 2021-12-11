@@ -1,11 +1,11 @@
 package com.github.takezoe.rison
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import play.api.libs.json._
 
 case class Resident(name: String, age: Int, role: Option[String])
 
-class PlayRisonSpec extends FunSuite {
+class PlayRisonSpec extends AnyFunSuite {
 
   test("PlayRisonSpec.fromPlayJson"){
     val json = Json.parse("""{"name":"Fiver","age":4,"role":null}""")

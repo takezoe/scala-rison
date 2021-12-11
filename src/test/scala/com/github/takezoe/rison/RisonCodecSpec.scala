@@ -1,13 +1,13 @@
 package com.github.takezoe.rison
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import wvlet.airframe.codec.MessageCodecFactory
 
 object RisonCodecSpec {
   case class Player(name: String, number: Int, position: Seq[String])
 }
 
-class RisonCodecSpec extends FunSuite {
+class RisonCodecSpec extends AnyFunSuite {
   import RisonCodecSpec._
 
   test("pack"){

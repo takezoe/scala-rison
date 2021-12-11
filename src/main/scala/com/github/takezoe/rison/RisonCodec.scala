@@ -1,6 +1,6 @@
 package com.github.takezoe.rison
 
-import wvlet.airframe.codec.{MessageCodec, MessageHolder}
+import wvlet.airframe.codec.{MessageCodec, MessageContext}
 import wvlet.airframe.msgpack.spi.Value._
 import wvlet.airframe.msgpack.spi.{Packer, Unpacker, Value}
 
@@ -39,7 +39,7 @@ object RisonCodec extends MessageCodec[String] {
     }
   }
 
-  override def unpack(u: Unpacker, v: MessageHolder): Unit = {
+  override def unpack(u: Unpacker, v: MessageContext): Unit = {
     val rison = unpackRisonValue(u, u.unpackValue)
     v.setString(rison.toRisonString)
   }

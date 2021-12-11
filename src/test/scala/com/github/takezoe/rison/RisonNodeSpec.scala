@@ -1,14 +1,13 @@
 package com.github.takezoe.rison
 
 import java.net.URLDecoder
-
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 object RisonNodeSpec {
   case class Player(name: String, age: Int)
 }
 
-class RisonNodeSpec extends FunSuite {
+class RisonNodeSpec extends AnyFunSuite {
   import RisonNodeSpec._
 
   test("toScala"){

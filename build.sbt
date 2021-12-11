@@ -4,14 +4,14 @@ organization := "com.github.takezoe"
 
 version := "0.0.4"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.7"
 
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.1",
-  "org.wvlet.airframe" %% "airframe-surface" % "0.79",
-  "org.wvlet.airframe" %% "airframe-codec" % "0.79" % "optional",
-  "com.typesafe.play" %% "play-json" % "2.6.10" % "optional",
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.0",
+  "org.wvlet.airframe" %% "airframe-surface" % "21.12.0",
+  "org.wvlet.airframe" %% "airframe-codec" % "21.12.0" % "optional",
+  "com.typesafe.play" %% "play-json" % "2.9.2" % "optional",
+  "org.scalatest" %% "scalatest" % "3.2.10" % "test"
 )
 
 publishMavenStyle := true
@@ -26,7 +26,7 @@ publishTo := {
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
-scalacOptions := Seq("-deprecation", "-feature")
+scalacOptions := Seq("-deprecation", "-feature", "-target:11")
 
 pomExtra := (
   <url>https://github.com/takezoe/scala-rison</url>
